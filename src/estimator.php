@@ -25,7 +25,7 @@ function covid19ImpactEstimator($data)
   $outPut->impact->infectionsByRequestedTime = $currentlyInfectedImpact * pow(2, $daysFactor);
   $outPut->severeImpact->infectionsByRequestedTime = $currentlyInfectedSevere * pow(2, $daysFactor);
 
-  return $outPut;
+  return (array)$outPut;
 }
 
 function durationNormalizer($periodType, $timeToElapse)
