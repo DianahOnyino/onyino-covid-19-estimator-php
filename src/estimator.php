@@ -18,8 +18,23 @@ function covid19ImpactEstimator($data)
   $days = durationNormalizer($data["periodType"], $data["timeToElapse"]);
   $daysFactor = intval($days / 3);
 
-  $outPut["impact"]["infectionsByRequestedTime"] = $currentlyInfectedImpact * pow(2, $daysFactor);
-  $outPut["severeImpact"]["infectionsByRequestedTime"] = $currentlyInfectedSevere * pow(2, $daysFactor);
+  $infectionsByRequestedTimeImpact = $currentlyInfectedImpact * pow(2, $daysFactor);
+  $infectionsByRequestedTimeSevereImpact = $currentlyInfectedSevere * pow(2, $daysFactor);
+  $outPut["impact"]["infectionsByRequestedTime"] = $infectionsByRequestedTimeImpact;
+  $outPut["severeImpact"]["infectionsByRequestedTime"] = $infectionsByRequestedTimeSevereImpact;
+
+  //...........Challenge 2 .........................
+  $severeCasesByRequestedTimeImpact =  (15/100) * $infectionsByRequestedTimeImpact;
+  $severeCasesByRequestedTimeSevereImpact =  (15 / 100) * $infectionsByRequestedTimeSevereImpact;
+  $outPut["impact"]["severeCasesByRequestedTime"] = $severeCasesByRequestedTimeImpact;
+  $outPut["severeImpact"]["severeCasesByRequestedTime"] = $severeCasesByRequestedTimeSevereImpact;
+
+  $thirtyFivePercentBedAvailability = (35 / 100) * $data["totalHospitalBeds"];
+  $hospitalBedsByRequestedTimeImpact = $thirtyFivePercentBedAvailability - $severeCasesByRequestedTimeImpact;
+  $hospitalBedsByRequestedTimeSevere = $thirtyFivePercentBedAvailability - $severeCasesByRequestedTimeSevereImpact;
+  $outPut["impact"]["hospitalBedsByRequestedTime"] = $hospitalBedsByRequestedTimeImpact;
+  $outPut["severeImpact"]["hospitalBedsByRequestedTime"] = $hospitalBedsByRequestedTimeSevere;
+  
 
   return $outPut;
 }
