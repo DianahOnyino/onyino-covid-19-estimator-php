@@ -1,5 +1,5 @@
 <?php
-
+require 'vendor/autoload.php';
 function covid19ImpactEstimator($data)
 {
   $outPut = [
@@ -25,18 +25,17 @@ function covid19ImpactEstimator($data)
 
   //...........Challenge 2 .........................
   $severeCasesByRequestedTimeImpact =  (15/100) * $infectionsByRequestedTimeImpact;
-  $severeCasesByRequestedTimeSevereImpact =  (15 / 100) * $infectionsByRequestedTimeSevereImpact;
+  $severeCasesByRequestedTimeSevereImpact =  (15/100) * $infectionsByRequestedTimeSevereImpact;
   $outPut["impact"]["severeCasesByRequestedTime"] = $severeCasesByRequestedTimeImpact;
   $outPut["severeImpact"]["severeCasesByRequestedTime"] = $severeCasesByRequestedTimeSevereImpact;
 
-  $thirtyFivePercentBedAvailability = intval((35 / 100)) * $data["totalHospitalBeds"];
-  $hospitalBedsByRequestedTimeImpact = $thirtyFivePercentBedAvailability - $severeCasesByRequestedTimeImpact;
-  $hospitalBedsByRequestedTimeSevere = $thirtyFivePercentBedAvailability - $severeCasesByRequestedTimeSevereImpact;
+  $availableBeds = (35/100) * $data["totalHospitalBeds"];
+  $hospitalBedsByRequestedTimeImpact = $availableBeds - $severeCasesByRequestedTimeImpact;
+  $hospitalBedsByRequestedTimeSevere = $availableBeds - $severeCasesByRequestedTimeSevereImpact;
 
   $outPut["impact"]["hospitalBedsByRequestedTime"] = $hospitalBedsByRequestedTimeImpact;
   $outPut["severeImpact"]["hospitalBedsByRequestedTime"] = $hospitalBedsByRequestedTimeSevere;
   
-
   return $outPut;
 }
 
