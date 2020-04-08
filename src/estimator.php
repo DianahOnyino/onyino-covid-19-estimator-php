@@ -2,30 +2,26 @@
 
 function covid19ImpactEstimator($data)
 {
-  if (!is_object($data)) {
-    $data = (object) $data;
-  }
-
-  $outPut = (object)[
+  $outPut = [
     "data" => $data, 
-    "impact" => (object)[], 
-    "severeImpact" => (object)[] 
+    "impact" => [], 
+    "severeImpact" => [] 
   ];
 
-  $reportedCases  = $data->reportedCases;
+  $reportedCases  = $data["reportedCases"];
   $currentlyInfectedImpact = $reportedCases * 10;
   $currentlyInfectedSevere = $reportedCases * 50;
 
-  $outPut->impact->currentlyInfected = $currentlyInfectedImpact;
-  $outPut->severeImpact->currentlyInfected = $currentlyInfectedSevere;
+  $outPut["impact"]["currentlyInfected"] = $currentlyInfectedImpact;
+  $outPut["severeImpact"]["currentlyInfected"] = $currentlyInfectedSevere;
 
-  $days = durationNormalizer($data->periodType, $data->timeToElapse);
+  $days = durationNormalizer($data["periodType"], $data["timeToElapse"]);
   $daysFactor = intval($days / 3);
 
-  $outPut->impact->infectionsByRequestedTime = $currentlyInfectedImpact * pow(2, $daysFactor);
-  $outPut->severeImpact->infectionsByRequestedTime = $currentlyInfectedSevere * pow(2, $daysFactor);
+  $outPut["impact"]["infectionsByRequestedTime"] = $currentlyInfectedImpact * pow(2, $daysFactor);
+  $outPut["severeImpact"]["infectionsByRequestedTime"] = $currentlyInfectedSevere * pow(2, $daysFactor);
 
-  return (array)$outPut;
+  return $outPut;
 }
 
 function durationNormalizer($periodType, $timeToElapse)
