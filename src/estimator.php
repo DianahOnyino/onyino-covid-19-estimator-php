@@ -29,9 +29,10 @@ function covid19ImpactEstimator($data)
   $outPut["impact"]["severeCasesByRequestedTime"] = $severeCasesByRequestedTimeImpact;
   $outPut["severeImpact"]["severeCasesByRequestedTime"] = $severeCasesByRequestedTimeSevereImpact;
 
-  $thirtyFivePercentBedAvailability = (35 / 100) * $data["totalHospitalBeds"];
+  $thirtyFivePercentBedAvailability = intval((35 / 100)) * $data["totalHospitalBeds"];
   $hospitalBedsByRequestedTimeImpact = $thirtyFivePercentBedAvailability - $severeCasesByRequestedTimeImpact;
   $hospitalBedsByRequestedTimeSevere = $thirtyFivePercentBedAvailability - $severeCasesByRequestedTimeSevereImpact;
+
   $outPut["impact"]["hospitalBedsByRequestedTime"] = $hospitalBedsByRequestedTimeImpact;
   $outPut["severeImpact"]["hospitalBedsByRequestedTime"] = $hospitalBedsByRequestedTimeSevere;
   
