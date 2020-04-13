@@ -15,12 +15,12 @@ class Covid19Controller extends Controller
 
         if (!$format || $format == "json") {
             $output = json_encode($output);
-            return response($output)->header('content-type', 'json');
+            return response($output)->header('Content-Type', 'application/json');
         }
 
         if ($format == "xml") {
             $output = $this->convertArrayToXML($output);
-            return response($output)->header('content-type', 'xml');
+            return response($output)->header('Content-Type', 'application/xml');
         }
     }
 
@@ -57,6 +57,6 @@ class Covid19Controller extends Controller
         $file = './app-info.log';
         $content = file_get_contents($file);
 
-        return response($content)->header('content-type', 'txt');
+        return response($content)->header('Content-Type', 'text/plain');
     }
 }
