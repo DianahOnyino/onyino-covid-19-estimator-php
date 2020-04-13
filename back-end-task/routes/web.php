@@ -14,5 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $app_info = [
+        "message" => 'Welcome to covid 19 challenge'
+    ];
+    return json_encode($app_info, JSON_PRETTY_PRINT);
+//    return view('welcome');
 });

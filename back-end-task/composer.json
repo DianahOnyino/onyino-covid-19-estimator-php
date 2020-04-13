@@ -41,7 +41,7 @@
             "database/factories"
         ],
         "files": [
-            "../src/estimator.php"
+            "./app/estimator.php"
         ]
     },
     "autoload-dev": {
