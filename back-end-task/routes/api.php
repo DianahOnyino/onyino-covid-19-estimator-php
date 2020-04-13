@@ -18,4 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/v1/on-covid-19/{format?}', 'Covid19Controller@getData');
+Route::get('/v1/on-covid-19/{format?}', 'Covid19Controller@getData');
