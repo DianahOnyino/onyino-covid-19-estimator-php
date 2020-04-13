@@ -44,8 +44,20 @@ class Covid19Controller extends Controller
             return $xml_output_info->asXML();
         }
 
-        if (!in_array($format, ["json", "xml"])) {
-            return "Specified format not accepted! Kindly use xml or json";
-        }
+        // if (!in_array($format, ["json", "xml"])) {
+        //     return "Specified format not accepted! Kindly use xml or json";
+        // }
+    }
+
+    public function getLogs() {
+        /**
+         * A valid response from the /logs endpoint should be text data with entries containing the 
+         * HTTP method, the request path, the HTTP status, and how long it took to handle the request
+         */
+        // dd("hey hey!!!!");
+        $file = './app-info.log';
+        $content = file_get_contents($file);
+
+        return $content;
     }
 }
