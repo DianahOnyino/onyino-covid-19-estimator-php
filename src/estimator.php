@@ -50,8 +50,15 @@ function covid19ImpactEstimator($data)
   $avgDailyIncomePopulation = $data["region"]["avgDailyIncomePopulation"];
   $avgDailyIncomeUSD = $data["region"]["avgDailyIncomeInUSD"];
 
-  $dollarsInFlightImpact = (int)(($infectionsByRequestedTimeImpact * $avgDailyIncomePopulation * $avgDailyIncomeUSD) / $days);
-  $dollarsInFlightSevere = (int)(($infectionsByRequestedTimeSevereImpact * $avgDailyIncomePopulation * $avgDailyIncomeUSD) / $days);
+  
+  if ($days == 0) {
+    $dollarsInFlightImpact = 0;
+    $dollarsInFlightSevere = 0;
+  } else{
+    $dollarsInFlightImpact = (int) (($infectionsByRequestedTimeImpact * $avgDailyIncomePopulation * $avgDailyIncomeUSD) / $days);
+    $dollarsInFlightSevere = (int) (($infectionsByRequestedTimeSevereImpact * $avgDailyIncomePopulation * $avgDailyIncomeUSD) / $days);
+  }
+  
   $outPut["impact"]["dollarsInFlight"] = $dollarsInFlightImpact;
   $outPut["severeImpact"]["dollarsInFlight"] = $dollarsInFlightSevere;
 
