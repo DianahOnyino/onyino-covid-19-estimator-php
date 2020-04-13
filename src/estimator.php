@@ -1,5 +1,5 @@
 <?php
-require 'vendor/autoload.php';
+
 function covid19ImpactEstimator($data)
 {
   $outPut = [
@@ -16,22 +16,22 @@ function covid19ImpactEstimator($data)
   $outPut["severeImpact"]["currentlyInfected"] = $currentlyInfectedSevere;
 
   $days = durationNormalizer($data["periodType"], $data["timeToElapse"]);
-  $daysFactor = intval($days / 3);
+  $daysFactor = (int)($days / 3);
 
-  $infectionsByRequestedTimeImpact = $currentlyInfectedImpact * pow(2, $daysFactor);
-  $infectionsByRequestedTimeSevereImpact = $currentlyInfectedSevere * pow(2, $daysFactor);
+  $infectionsByRequestedTimeImpact = (int)($currentlyInfectedImpact * pow(2, $daysFactor));
+  $infectionsByRequestedTimeSevereImpact = (int)($currentlyInfectedSevere * pow(2, $daysFactor));
   $outPut["impact"]["infectionsByRequestedTime"] = $infectionsByRequestedTimeImpact;
   $outPut["severeImpact"]["infectionsByRequestedTime"] = $infectionsByRequestedTimeSevereImpact;
 
   //...........Challenge 2 .........................
-  $severeCasesByRequestedTimeImpact =  (15/100) * $infectionsByRequestedTimeImpact;
-  $severeCasesByRequestedTimeSevereImpact =  (15/100) * $infectionsByRequestedTimeSevereImpact;
+  $severeCasesByRequestedTimeImpact =  (int)(0.15 * $infectionsByRequestedTimeImpact);
+  $severeCasesByRequestedTimeSevereImpact =  (int)(0.15 * $infectionsByRequestedTimeSevereImpact);
   $outPut["impact"]["severeCasesByRequestedTime"] = $severeCasesByRequestedTimeImpact;
   $outPut["severeImpact"]["severeCasesByRequestedTime"] = $severeCasesByRequestedTimeSevereImpact;
 
-  $availableBeds = (35/100) * $data["totalHospitalBeds"];
-  $hospitalBedsByRequestedTimeImpact = $availableBeds - $severeCasesByRequestedTimeImpact;
-  $hospitalBedsByRequestedTimeSevere = $availableBeds - $severeCasesByRequestedTimeSevereImpact;
+  $availableBeds = 0.35 * $data["totalHospitalBeds"];
+  $hospitalBedsByRequestedTimeImpact = (int)($availableBeds - $severeCasesByRequestedTimeImpact);
+  $hospitalBedsByRequestedTimeSevere = (int)($availableBeds - $severeCasesByRequestedTimeSevereImpact);
 
   $outPut["impact"]["hospitalBedsByRequestedTime"] = $hospitalBedsByRequestedTimeImpact;
   $outPut["severeImpact"]["hospitalBedsByRequestedTime"] = $hospitalBedsByRequestedTimeSevere;
