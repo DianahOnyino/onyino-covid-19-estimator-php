@@ -35,7 +35,26 @@ function covid19ImpactEstimator($data)
 
   $outPut["impact"]["hospitalBedsByRequestedTime"] = $hospitalBedsByRequestedTimeImpact;
   $outPut["severeImpact"]["hospitalBedsByRequestedTime"] = $hospitalBedsByRequestedTimeSevere;
-  
+
+  //...........Challenge 3 .........................
+  $casesForICUByRequestedTimeImpact = (int)(0.05 * $infectionsByRequestedTimeImpact);
+  $casesForICUByRequestedTimeSevere = (int)(0.05 * $infectionsByRequestedTimeSevereImpact);
+  $outPut["impact"]["casesForICUByRequestedTime"] = $casesForICUByRequestedTimeImpact;
+  $outPut["severeImpact"]["casesForICUByRequestedTime"] = $casesForICUByRequestedTimeSevere;
+
+  $casesForVentilatorsByRequestedTimeImpact = (int) (0.02 * $infectionsByRequestedTimeImpact);
+  $casesForVentilatorsByRequestedTimeSevere = (int) (0.02 * $infectionsByRequestedTimeSevereImpact);
+  $outPut["impact"]["casesForVentilatorsByRequestedTime"] = $casesForVentilatorsByRequestedTimeImpact;
+  $outPut["severeImpact"]["casesForVentilatorsByRequestedTime"] = $casesForVentilatorsByRequestedTimeSevere;
+
+  $avgDailyIncomePopulation = $data["region"]["avgDailyIncomePopulation"];
+  $avgDailyIncomeUSD = $data["region"]["avgDailyIncomeInUSD"];
+
+  $dollarsInFlightImpact = (int)(($infectionsByRequestedTimeImpact * $avgDailyIncomePopulation * $avgDailyIncomeUSD) / $days);
+  $dollarsInFlightSevere = (int)(($infectionsByRequestedTimeSevereImpact * $avgDailyIncomePopulation * $avgDailyIncomeUSD) / $days);
+  $outPut["impact"]["dollarsInFlight"] = $dollarsInFlightImpact;
+  $outPut["severeImpact"]["dollarsInFlight"] = $dollarsInFlightSevere;
+
   return $outPut;
 }
 
