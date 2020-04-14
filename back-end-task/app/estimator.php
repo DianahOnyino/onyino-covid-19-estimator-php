@@ -2,7 +2,6 @@
 
 function covid19ImpactEstimator($data)
 {
-  //...........Challenge 1 .........................
   $outPut = [
     "data" => $data, 
     "impact" => [], 
@@ -51,7 +50,7 @@ function covid19ImpactEstimator($data)
   $avgDailyIncomePopulation = $data["region"]["avgDailyIncomePopulation"];
   $avgDailyIncomeUSD = $data["region"]["avgDailyIncomeInUSD"];
 
-  //Check if days variable is 0 to avoid division by zero error
+  
   if ($days == 0) {
     $dollarsInFlightImpact = 0;
     $dollarsInFlightSevere = 0;
@@ -66,7 +65,6 @@ function covid19ImpactEstimator($data)
   return $outPut;
 }
 
-//Normalize time to elapse to days depending on the given period type
 function durationNormalizer($periodType, $timeToElapse)
 {
   $days = $timeToElapse;
