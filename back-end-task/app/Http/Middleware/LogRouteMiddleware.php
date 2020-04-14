@@ -3,11 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Log;
-use Symfony\Component\HttpFoundation\Request;
 
 class LogRouteMiddleware
 {
@@ -18,7 +14,6 @@ class LogRouteMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
- 
 
     public function handle($request, Closure $next)
     {
@@ -33,6 +28,7 @@ class LogRouteMiddleware
 
     public function terminate($request, $response)
     {
+        //Getting the request contents and logging then to a file for access afterwards
         $method = strtoupper($request->getMethod());
         $uri = $request->getRequestUri();
         $status = $response->getStatusCode();

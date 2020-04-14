@@ -19,6 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//Passing the routes through LogRouteMiddleware in order to log visited route details
+
 Route::get('/v1/on-covid-19/logs', 'Covid19Controller@getLogs')->middleware(LogRouteMiddleware::class);
 
 Route::post('/v1/on-covid-19/{format?}', 'Covid19Controller@getData')->middleware(LogRouteMiddleware::class);
